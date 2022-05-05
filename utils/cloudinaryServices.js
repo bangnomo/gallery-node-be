@@ -10,13 +10,13 @@ cloudinary.config({
 
 cloudinaryUpload = (file) =>
   cloudinary.uploader.upload(file, {
-    upload_preset: "agirlpic",
+    upload_preset: process.env.UPLOAD_PRESET,
   });
 
 //get images by search api, sort_by working with folder
 searchImages = async (next_cursor) => {
   const resources = await cloudinary.search
-    .expression("folder:agirlpic")
+    .expression(`folder:${process.env.UPLOAD_FOLDER}`)
     .max_results(20)
     .sort_by("uploaded_at", "desc")
     .next_cursor(next_cursor)
